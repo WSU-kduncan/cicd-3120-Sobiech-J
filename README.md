@@ -24,7 +24,7 @@ First a base image must be installed from Docker Hub. I will use the latest [ubu
 
 To create a docker image create a folder in WSL2. Place a Dockerfile (with Dockerfile as the name) and any files that will be placed in the base image within this folder. For the apache2 example we want to move the website folder with all of our website contents into the folder with Dockerfile.
 
-When these files are assembled, the new image can be downloaded with a bash command. For the image I am using the command is `docker pull ubuntu/apache2`.
+When these files are assembled, the new image can be downloaded with a bash command. For the image I am using the command is `docker pull ubuntu/apache2`. The new image will be called "bird-website-apache2".
 
 In the Dockerfile define the details of the image you want to create. Details can be found [on Docker's documentation](https://docs.docker.com/engine/reference/builder/). The Dockerfile for my new image was defined as follows:
 
@@ -42,11 +42,11 @@ CMD apachectl -D FOREGROUND
 ```
 
 **To build the image**
-* command to create a new image: `docker build -t my-u-apache2:latest .`
+* command to create a new image: `docker build -t bird-website-apache2:latest .`
   * this command must be run while inside of the folder with the dockerfile (that is what the . is referring to)
 
 **To run a container of the image**
-* command to run the new image as a container in the Linux command line: `docker run -dit -p 8080:80 my-u-apache2:latest`
+* command to run the new image as a container in the Linux command line: `docker run -dit -p 8080:80 bird-website-apache2:latest`
 * The container can also be run for the first time from an image inside of the Docker Desktop Windows program. To run a container that way, click on the "Images" tab. Press the green "Run" button that appears when hovering over the desired image.
   * A previously run container can be run again in the Docker Desktop app. It can be found under the Container/Apps tab.
 
@@ -55,4 +55,16 @@ CMD apachectl -D FOREGROUND
 
 
 ##Part 2: GitHub and DockerHub
+
+**Create a Docker Hub repository and push image to it**
+Create an account on [Docker Hub]( https://hub.docker.com/) if you have not already. When signed it click on the option for "Repositories". Click the "Create Repository" button in the top right of the next webpage. Name the repository and make it public. We will automate the process of pushing images to Docker Hub, but here is the manual process on the command line to outline what is being automated.
+
+**Manually pushing an image to Docker Hub**
+If you already have a working image and a Docker repository set up, use the following commands on the command line. Change anything in <> to match your information:
+* login to docker before using the following commands: `docker login -u <"your-username"> -p <"your-docker-password"> docker.io`
+* `docker tag <image-name> <your-username-on-docker-hub>/<your-repository-name>:<image-tag>`
+* `docker push <image-name> <your-username-on-docker-hub>/<your-repository-name>:<image-tag>`
+
+**Automating the process**
+
 
