@@ -20,16 +20,29 @@ Having a GitHub repo is not required but it is highly recomended. To create a re
 
 ## **Part 1: Create a docker image**
 
-First a base image must be installed from Docker Hub. I will use the latest [apache2/httpd image](https://hub.docker.com/_/httpd). You may need to create a Docker Hub account.
+First a base image must be installed from Docker Hub. I will use the latest [ubuntu/apache2 image](https://hub.docker.com/r/ubuntu/apache2). You may need to create a Docker Hub account.
 
 To create a docker image create a folder in WSL2. Place a Dockerfile (with Dockerfile as the name) and any files that will be placed in the base image within this folder. For the apache2 example we want to move the website folder with all of our website contents into the folder with Dockerfile.
 
-When these files are assembled, the new image can be downloaded with a bash command. For the image I am using the command is `docker pull httpd`.
+When these files are assembled, the new image can be downloaded with a bash command. For the image I am using the command is `docker pull ubuntu/apache2`.
 
-In the Dockerfile define the details of the image you want to create. Details can be found [on Docker's documentation](https://docs.docker.com/engine/reference/builder/). My new image was defined as follows:
+In the Dockerfile define the details of the image you want to create. Details can be found [on Docker's documentation](https://docs.docker.com/engine/reference/builder/). The Dockerfile for my new image was defined as follows:
+
+```
+FROM ubuntu/apache2:latest
+
+RUN rm /var/www/html/index.html
+RUN rm /etc/apache2/sites-available/000-default.conf
+
+COPY website /var/www/html/website
+COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
+
+EXPOSE 80
+CMD apachectl -D FOREGROUND
+```
 
 **To build the image**
-* command to create a new image: `docker build -t my-u-apache2:latest` .
+* command to create a new image: `docker build -t my-u-apache2:latest .`
   * this command must be run while inside of the folder with the dockerfile (that is what the . is referring to)
 
 **To run a container of the image**
