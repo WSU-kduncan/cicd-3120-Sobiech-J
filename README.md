@@ -28,7 +28,18 @@ When these files are assembled, the new image can be downloaded with a bash comm
 
 In the Dockerfile define the details of the image you want to create. Details can be found [on Docker's documentation](https://docs.docker.com/engine/reference/builder/). My new image was defined as follows:
 
-command to create a new image: docker build -t my-u-apache2:latest .
+**To build the image**
+* command to create a new image: `docker build -t my-u-apache2:latest` .
+  * this command must be run while inside of the folder with the dockerfile (that is what the . is referring to)
 
-command to run the new image as a container: docker run -dit -p 8080:80 my-u-apache2:latest
+**To run a container of the image**
+* command to run the new image as a container in the Linux command line: `docker run -dit -p 8080:80 my-u-apache2:latest`
+* The container can also be run for the first time from an image inside of the Docker Desktop Windows program. To run a container that way, click on the "Images" tab. Press the green "Run" button that appears when hovering over the desired image.
+  * A previously run container can be run again in the Docker Desktop app. It can be found under the Container/Apps tab.
+
+**To check that the container works**
+* you can check that the container is running on the specified port (port 8080 for the run config in the Linux command line run command) by going to 127.0.0.1:port on a web browser. The website should be displayed on that port.
+
+
+##Part 2: GitHub and DockerHub
 
