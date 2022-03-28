@@ -56,7 +56,7 @@ CMD apachectl -D FOREGROUND
 
 ## **Part 2: GitHub and DockerHub**
 
-**Create a Docker Hub repository and push image to it**
+**Create a Docker Hub repository and push image to it**'\n'
 Create an account on [Docker Hub]( https://hub.docker.com/) if you have not already. When signed it click on the option for "Repositories". Click the "Create Repository" button in the top right of the next webpage. Name the repository and make it public. We will automate the process of pushing images to Docker Hub, but here is the manual process on the command line to outline what is being automated.
 
 **Manually pushing an image to Docker Hub**
