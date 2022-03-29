@@ -20,7 +20,7 @@ Having a GitHub repo is not required but it is highly recomended. To create a re
 
 ## **Part 1: Create a docker image**
 
-First a base image must be installed from Docker Hub. I will use the latest [ubuntu/apache2 image](https://hub.docker.com/r/ubuntu/apache2). You may need to create a Docker Hub account.
+First a base image must be installed from Docker Hub. I will use the latest [ubuntu/apache2 image](https://hub.docker.com/r/ubuntu/apache2). The files for this can be found in the ubuntu-apache2-docker folder for this project. As an alternative, I created a container from the [httpd image](https://hub.docker.com/_/httpd) that hosts the same website in apache2. It's files can be found in the httpd-apache2-docker folder in this project. The steps for creating the ubuntu version of the container are laid out below. You may need to create a Docker Hub account to download any base image.
 
 To create a docker image create a folder in WSL2. Place a Dockerfile (with Dockerfile as the name) and any files that will be placed in the base image within this folder. For the apache2 example we want to move the website folder with all of our website contents into the folder with Dockerfile.
 
