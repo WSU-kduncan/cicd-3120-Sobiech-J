@@ -30,6 +30,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: https://github.com/WSU-kduncan/cicd-3120-Sobiech-J/tree/main/ubuntu-apache2-docker/Dockerfile
+          file: ~/
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/ubuntu-apache2-bird-website:latest
