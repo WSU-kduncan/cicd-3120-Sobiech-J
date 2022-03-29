@@ -29,7 +29,7 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v2
         with:
-          context: cicd-3120-Sobiech-J
-          file: ubuntu-apache2-docker/Dockerfile
+          context: .
+          file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/ubuntu-apache2-bird-website:latest
