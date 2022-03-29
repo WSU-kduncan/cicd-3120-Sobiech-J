@@ -66,5 +66,34 @@ If you already have a working image and a Docker repository set up, use the foll
 * `docker push <image-name> <your-username-on-docker-hub>/<your-repository-name>:<image-tag>`
 
 **Automating the process**<br>
+The next step is most easily done on GitHub's website. A good guide can be found [here](https://docs.docker.com/ci-cd/github-actions/). We must configure a couple of secrets with the login username and password for Docker Hub. Login to GitHub and go to 'Settings' then scroll down to 'Secrets' under 'Security'. Then select the option to 'New repository secret'. Create a secret for your Docker Hub username with the username as a value and something like Docker_Username as the name. It will convert the secret name into all uppercase letters. Also go to Docker Hub settings, security, new access token. Create a new token with your desired name. Use this token's name as the value of a second GitHub secret called something like Docker_Token.
 
+Go to your GitHub repository, Actions on the repository. You may get a recommended template for a docker image. If you do, select it. If you do not, search "Docker Image" in the search bar. Give the workflow a new name, leave the sections with 'branch' the same unless you plan on working and committing outside the main branch. Assuming you are using Ubuntu WSL2 as recommended earlier you can also leave the 'runs-on' section the same as it should already say "ubuntu-latest" as its value. Configuring the last section, 'steps', will require the most work. Copy the following code block in the place of the existing 'steps' area. Make sure to preserve indentation so 'steps' is in line with 'runs-on'.
 
+```
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v2
+      -
+        name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      -
+        name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/simplewhale:latest
+```
+
+Replace all references to "DOCKER_HUB_USERNAME" with the name of your secret for your Docker Hub username. Also replace DOCKER_HUB_ACCESS_TOKEN with the name of your secret holding your Docker access token. The path to your projects Dockerfile also needs changed from ./Dockerfile. Since this file is placed in your repository under /.github/workflows/file-name, the path will probably require a few steps up using ../ . For example my path was ../../ubuntu-apache2-docker/Dockerfile . Also change the contents of the final line 'tags' from simplewhale:latest to the name of your-project:latest. This example used ubuntu-apache2-bird-website:latest .
+
+Commit these changes in GitHub and pull them on your Ubuntu WSL2 VM.
