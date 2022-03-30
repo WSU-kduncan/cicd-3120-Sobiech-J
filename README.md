@@ -22,7 +22,7 @@ Having a GitHub repo is not required but it is highly recomended. To create a re
 
 First a base image must be installed from Docker Hub. I will use the latest [ubuntu/apache2 image](https://hub.docker.com/r/ubuntu/apache2). The files for this can be found in the ubuntu-apache2-docker folder for this project. As an alternative, I created a container from the [httpd image](https://hub.docker.com/_/httpd) that hosts the same website in apache2. It's files can be found in the httpd-apache2-docker folder in this project. The steps for creating the ubuntu version of the container are laid out below. You may need to create a Docker Hub account to download any base image.
 
-To create a docker image create a folder in WSL2. Place a Dockerfile (with Dockerfile as the name) and any files that will be placed in the base image within this folder. For the apache2 example we want to move the website folder with all of our website contents into the folder with Dockerfile.
+To create a docker image create a folder in WSL2. Place a Dockerfile (with Dockerfile as the name) and any files that will be placed in the base image within this folder. For the apache2 example we want to move the website folder with all of our website contents into the folder with Dockerfile. For later automation to work, if this project is done in a GitHub repo, the Dokerfile you use and all the file it needs need to be in the root directory of the repository. They cannot be inside another folder within it. In my sample GitHub repository where the READE.md is located, the ubuntu version of the project would be run because its files are in the root directory and the httpd version in the httpd-docker-image folder will be ignored.
 
 When these files are assembled, the new image can be downloaded with a bash command. For the image I am using the command is `docker pull ubuntu/apache2`. The new image will be called "bird-website-apache2".
 
@@ -72,4 +72,4 @@ An excellent starting point can be found [here](https://github.com/pattonsgirl/S
 
 Replace all references to "DOCKER_HUB_USERNAME" with the name of your secret for your Docker Hub username. Also replace DOCKER_TOKEN with the name of your secret holding your Docker access token. Replace all references to DOCKER_HUB_REPO with the name of your Docker Hub repository secret as well. Delete the 'env' section and change the prefix to where the Docker Repository secret is used from 'env' to 'secret'. We are using a secret for this instead of the environment variable from the template.
 
-Commit these changes in GitHub and pull them on your Ubuntu WSL2 VM.
+Commit these changes in GitHub and pull them on your Ubuntu WSL2 VM. Whenever you push commits to GitHub remotely or push a commit within GitHub, this workflow will be triggered.
