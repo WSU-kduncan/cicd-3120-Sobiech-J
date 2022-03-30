@@ -9,17 +9,17 @@ on:
 #allows you to manually trigger workflow
     workflow-dispatch:
 
-  jobs:
-    say_hello:
-      runs-on: ubuntu-latest
+jobs:
+  say_hello:
+    runs-on: ubuntu-latest
 
 #actual steps that run
-      steps:
+    steps:
 #names are helpful for looking at logs
-        - name: Say Hello
-          run: echo Hello World!
+      - name: Say Hello
+        run: echo Hello World!
 
-        - name: Say Goodbye
-          run: |
-            echo Job Finished.
-            echo Goodbye!
+      - name: Say Goodbye
+        run: |
+          echo Job Finished.
+          echo Goodbye!
