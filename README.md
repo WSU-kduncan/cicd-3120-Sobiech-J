@@ -73,3 +73,18 @@ An excellent starting point can be found [here](https://github.com/pattonsgirl/S
 Replace all references to "DOCKER_HUB_USERNAME" with the name of your secret for your Docker Hub username. Also replace DOCKER_TOKEN with the name of your secret holding your Docker access token. Replace all references to DOCKER_HUB_REPO with the name of your Docker Hub repository secret as well. Delete the 'env' section and change the prefix to where the Docker Repository secret is used from 'env' to 'secret'. We are using a secret for this instead of the environment variable from the template.
 
 Commit these changes in GitHub and pull them on your Ubuntu WSL2 VM. Whenever you push commits to GitHub remotely or push a commit within GitHub, this workflow will be triggered.
+
+## **Part 3: Install Webhooks On Remote System**
+* Get access to a Ubuntu system. These steps are done on an Ubuntu 18 virtual machine on Amazon Web Services
+
+**On The Remote System**
+* Get ssh access, get updates with `sudo apt update`, etc.
+* Install docker with `sudo apt install docker.io`
+* Install the webhook library with `sudo apt install webhook`
+* Create a hook config file. In this example it will be a .json file called redeploy.json .
+* Create a script that will call the config file:
+* Go to the Docker Hub repo for the project/image and press on "Webhooks"
+  * Enter a name for the new webhook
+  * Enter the public IP of you remote system into the https:// address
+* Test changes by altering the website files in the project on the remote system. Commit and push changes (triggering automated Docker Hub commit from Part 2)
+  * Can tag version before push by writing `git tag -a v<version>.<release>.<patch>`. ie v1.6.2
