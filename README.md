@@ -128,6 +128,11 @@ This json file defines what files the webhook should call. The first line with l
 
 ## Part 4: Diagramming
 
+Included is a diagram of the workflow created with this walkthrough.
+
+![workflow diagram](workflow.png)
+
+Description and recap: With GitHub Actions and the Docker Hub Webhook in place any changes to the main branch of the GitHub repo holding the Docker image's files will cause a chain reaction. 1. developer pushes changes to the Docker image's file to GitHub 2. GitHub Actions is triggered by the push and creates the Docker image from the files, pushing it to Docker Hub under the "latest" tag. 3. Docker Hub sees that the image has been changed, so it reaches out to the server defined in Docker Hub's Webhooks page for the repo. 4. If the server is listening using `webhook -hooks <path/to/webhook-config.json> -verbose`, it will update the image and container it is using to host the website.
 
 
 ## Final notes on the website container
