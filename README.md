@@ -85,7 +85,10 @@ Commit these changes in GitHub and pull them on your Ubuntu WSL2 VM. Whenever yo
 * Create a script that will call the config file:
 * Go to the Docker Hub repo for the project/image and press on "Webhooks"
   * Enter a name for the new webhook
-  * Enter the public IP of you remote system into the https:// address
+  * Enter the public IP of you remote system into the https://server-address:9000
+  * Note that the webhook will be running on port 9000
+* Set up webhook receiver on remote system
+  * webhook can be called manually using `sudo ./<script-name> -hooks <hook-config-file.json> -verbose`
+  * to turn on listener for webhook use `webhook -hooks <path/to/webhook-config.json> -verbose`
 * Test changes by altering the website files in the project on the remote system. Commit and push changes (triggering automated Docker Hub commit from Part 2)
   * Can tag version before push by writing `git tag -a v<version>.<release>.<patch>`. ie v1.6.2
-* Run script with `sudo ./<script-name> -hooks <hook-config-file.json> -verbose`
