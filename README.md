@@ -88,3 +88,4 @@ Commit these changes in GitHub and pull them on your Ubuntu WSL2 VM. Whenever yo
   * Enter the public IP of you remote system into the https:// address
 * Test changes by altering the website files in the project on the remote system. Commit and push changes (triggering automated Docker Hub commit from Part 2)
   * Can tag version before push by writing `git tag -a v<version>.<release>.<patch>`. ie v1.6.2
+* Run script with `sudo ./<script-name> -hooks <hook-config-file.json> -verbose`
