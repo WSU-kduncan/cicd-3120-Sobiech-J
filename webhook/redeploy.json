@@ -1,7 +1,7 @@
 [
   {
     "id": "redeploy",
-    "execute-command": "/home/ubuntu/cicd-3120-Sobiech-J/webhook/pull-restart.sh",
+    "execute-command": "./pull-restart.sh",
     "command-working-directory": "/home/ubuntu/cicd-3120-Sobiech-J/webhook",
     "response-message": "Redeploying API server."
   }
