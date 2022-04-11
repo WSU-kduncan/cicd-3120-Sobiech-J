@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # kill any current bird website containers then delete any unused images and containers
 docker kill bird-website
 yes | docker system prune
