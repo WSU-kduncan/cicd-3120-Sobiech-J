@@ -85,7 +85,8 @@ Commit these changes in GitHub and pull them on your Ubuntu WSL2 VM. Whenever yo
 * Create a script that will call the config file:
 * Go to the Docker Hub repo for the project/image and press on "Webhooks"
   * Enter a name for the new webhook
-  * Enter the public IP of you remote system into the https://server-address:9000
+  * Enter the public IP of you remote system into the https://server-address:9000/hooks/{id}
+  * id should be the id tag in the hooks config json file (redeploy.json for this example, where the id is "redeploy")
   * Note that the webhook will be running on port 9000
 * Set up webhook receiver on remote system
   * webhook can be called manually using `sudo ./<script-name> -hooks <hook-config-file.json> -verbose`
