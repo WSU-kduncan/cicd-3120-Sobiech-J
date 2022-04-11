@@ -91,5 +91,47 @@ Commit these changes in GitHub and pull them on your Ubuntu WSL2 VM. Whenever yo
 * Set up webhook receiver on remote system
   * webhook can be called manually using `sudo ./<script-name> -hooks <hook-config-file.json> -verbose`
   * to turn on listener for webhook use `webhook -hooks <path/to/webhook-config.json> -verbose`
-* Test changes by altering the website files in the project on the remote system. Commit and push changes (triggering automated Docker Hub commit from Part 2)
+* Test changes by altering the website files in the project on the remote system. Commit and push changes (triggering GitHub workflow and Docker Hub commit from Part 2)
   * Can tag version before push by writing `git tag -a v<version>.<release>.<patch>`. ie v1.6.2
+
+Sample script to update and replace running container
+```
+#!/bin/bash
+
+# kill any current bird website containers then delete any unused images and containers
+docker kill bird-website
+yes | docker system prune
+#Get updated image
+docker pull sobiechj/wsu-ceg3120-bird-website:latest
+#Create container from image
+docker run -d --rm --name bird-website -p 80:80 sobiechj/wsu-ceg3120-bird-website:latest
+
+```
+
+This script is using the repository that I set up for this project. To fit your own project change all references to `sobiechj/wsu-ceg3120-bird-website` to the name of your docker repository. First the script kills any old versions of the container running with `docker kill` This script will delete any unused docker images and containers on a system the script is called on using `docker system prune`. Note that the listener line used to call this should be called in sudo to allow docker to run on a default docker set up. `docker pull` will fetch the updated docker image, and the `docker run` line will create a container of the new image to run on port 80.
+
+Sample of webhook config/json file:
+```
+[
+  {
+    "id": "redeploy",
+    "execute-command": "./pull-restart.sh",
+    "command-working-directory": "/home/ubuntu/cicd-3120-Sobiech-J/webhook",
+    "response-message": "Redeploying API server."
+  }
+]
+
+```
+
+This json file defines what files the webhook should call. The first line with label "id" tells the webhook the name of this webhook workflow so the Docker Hub webhook knows what id to use when making a call to the server. The "execute-command" line gives the name of the script to run that will update the image and container on the server. "command-working-directory" gives the directory that the script is located in. The final line, "response-message", is optional and merely gives a message to print out when the webhook call is successfully made.
+
+
+## Part 4: Diagramming
+
+
+
+## Final notes on the website container
+
+The website hosted by the container/image used in this walkthrough are a simple webpage that uses some basic javascript functionality. The webpage is a gallery of photos of birds ordered alphabetically. The webpage randomly loads a bird with its name shown above. The gallery can be navigated using 3 buttons to get the next bird alphabetically in the list, the previous bird, or a random one that is different than the current bird.
+
+![picture of container's website](bird-website.jpg)
