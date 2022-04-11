@@ -1,6 +1,6 @@
 # kill any current bird website containers then delete any unused images and containers
 docker kill bird-website
-docker system prune
+yes | docker system prune
 #Get updated image
 docker pull sobiechj/wsu-ceg3120-bird-website:latest
 #Create container from image
